@@ -4,12 +4,14 @@
   "description": "",
   "main": "none",
   "scripts": {
-    "day1": "tsx 1/lock.ts"
+    "day1": "tsx 1/lock.ts",
+    "day2": "tsx 2/gift_shop.ts"
   },
   "author": "Thib Will",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "@types/node": "^25.5.2",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2"
   }
