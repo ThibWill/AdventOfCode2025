@@ -1,0 +1,16 @@
+{
+  "name": "2025",
+  "version": "1.0.0",
+  "description": "",
+  "main": "none",
+  "scripts": {
+    "day1": "tsx 1/lock.ts"
+  },
+  "author": "Thib Will",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  }
+}
