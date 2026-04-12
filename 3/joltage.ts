@@ -33,26 +33,30 @@ const findMaxNumberIndex = (joltages: number []) => {
   return maxNumberIndex;
 }
 
-const findEligibleJoltagesLeftValue = (battery: string) => {
-  const batteryLeftPart = battery.substring(0, battery.length - 1);
-  return batteryLeftPart.split('').map(joltage => Number(joltage));
-}
-
-const findEligibleJoltagesRightValue = (battery: string, indexLeftValue: number) => {
-  const batteryLeftPart = battery.substring(indexLeftValue + 1, battery.length);
+const extractEligibleJoltagesValues = (battery: string, startIndex: number, endIndex: number) => {
+  const batteryLeftPart = battery.substring(startIndex, endIndex);
   return batteryLeftPart.split('').map(joltage => Number(joltage));
 }
 
 const findBatteryLargestJoltage = (battery: string) => {
-  const eligibleVoltagesLeftValue = findEligibleJoltagesLeftValue(battery);
-  const leftJoltageIndex = findMaxNumberIndex(eligibleVoltagesLeftValue);
-  const eligibleVoltagesRightValue = findEligibleJoltagesRightValue(battery, leftJoltageIndex);
-  const rightJoltageIndex = findMaxNumberIndex(eligibleVoltagesRightValue) + leftJoltageIndex + 1;
+  let offsetLeft = 0;
+  let offsetRight = 0;
+  const highestJoltageIndexes = [];
+  for (let i = 11; i >= 0; i--) 
+  {
+    offsetRight = battery.length - i;
+    const eligibleVoltagesLeftValue = extractEligibleJoltagesValues(battery, offsetLeft, offsetRight);
+    const joltageIndex = findMaxNumberIndex(eligibleVoltagesLeftValue);
+    highestJoltageIndexes.push(joltageIndex + offsetLeft);
+    offsetLeft += joltageIndex + 1;
+  }
+ 
   
-  return Number(`${battery[leftJoltageIndex]}${battery[rightJoltageIndex]}`);
+  return Number(highestJoltageIndexes.map(highestJoltageIndex => battery[highestJoltageIndex]).join(''));
 }
 
 const banks = await loadDocument() || '';
+// const batteries = parser(exampleInput);
 const batteries = parser(banks);
 
 console.log(batteries.map(battery => findBatteryLargestJoltage(battery)).reduce((acc, curr) => acc += curr, 0))
