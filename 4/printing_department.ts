@@ -22,8 +22,8 @@ const inputExample = `..@@.@@@@.
 .@@@@@@@@.
 @.@.@@@.@.`;
 
-const parser = (input: string): string[] => {
-  return input.split('\n');
+const parser = (input: string): string[][] => {
+  return input.split('\n').map(row => row.split(''));
 }
 
 const input = await loadDocument() ?? '';
@@ -35,27 +35,33 @@ const columnLength = printingDepartment.length;
 const neighbors = [[1, 1], [-1, 1], [1, -1], [0, 1], [1, 0], [0, -1], [-1, 0], [-1, -1]];
 
 let accessibleRolls = 0;
+let previousAccessibleRolls = null;
 
-for (let i = 0; i < columnLength; i++) {
-  const column = printingDepartment[i];
-  for (let j = 0; j < rowLength; j++) {
-    const place = column[j];
-    if (place !== '@') {
-      continue;
-    }
+while (previousAccessibleRolls !== accessibleRolls) {
+  previousAccessibleRolls = accessibleRolls;
 
-    let paperRollsAround = 0;
-    for (let neighbor of neighbors) {
-      const rowDiff = neighbor[0];
-      const columnDiff = neighbor[1];
-
-      if (printingDepartment?.[i + columnDiff]?.[j + rowDiff] === '@') {
-        paperRollsAround += 1;
+  for (let i = 0; i < columnLength; i++) {
+    const column = printingDepartment[i];
+    for (let j = 0; j < rowLength; j++) {
+      const place = column[j];
+      if (place !== '@') {
+        continue;
       }
-    }
 
-    if (paperRollsAround < 4) {
-      accessibleRolls += 1;
+      let paperRollsAround = 0;
+      for (let neighbor of neighbors) {
+        const rowDiff = neighbor[0];
+        const columnDiff = neighbor[1];
+
+        if (printingDepartment?.[i + columnDiff]?.[j + rowDiff] === '@') {
+          paperRollsAround += 1;
+        }
+      }
+
+      if (paperRollsAround < 4) {
+        accessibleRolls += 1;
+        printingDepartment[i][j] = '.';
+      }
     }
   }
 }
