@@ -5,7 +5,9 @@
   "main": "none",
   "scripts": {
     "day1": "tsx 1/lock.ts",
-    "day2": "tsx 2/gift_shop.ts"
+    "day2": "tsx 2/gift_shop.ts",
+    "day3": "tsx 3/joltage.ts",
+    "day4": "tsx 4/printing_department.ts"
   },
   "author": "Thib Will",
   "license": "ISC",
