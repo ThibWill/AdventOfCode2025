@@ -40,22 +40,40 @@ const parser = (input: string): { ranges: IDRange[], ingredients: number[]} => {
   }
 }
 
-const isFreshIngredient = (ingredient: number, ranges: IDRange[]): number => {
-  for (const range of ranges) {
-    if (range.start <= ingredient && range.end >= ingredient) {
-      return 1;
-    }
-  }
-  return 0;
-}
-
 const input = await loadDocument() ?? '';
 
-const { ranges, ingredients } = parser(input);
+const { ranges } = parser(inputExample);
 
-let freshIngredients = 0;
-for (const ingredient of ingredients) {
-  freshIngredients += isFreshIngredient(ingredient, ranges);
+for (let i = 0; i < ranges.length; i++) {
+  const range = ranges[i];
+  for (let j = 0; j < ranges.length; j++) {
+    if (i === j) {
+      continue;
+    }
+
+    const otherRange = ranges[j];
+    if (range.start >= otherRange.start && range.end <= otherRange.end) {
+      range.start = -1;
+      range.end = -1;
+      continue;
+    }
+
+    if (range.start <= otherRange.end && range.start >= otherRange.start) {
+      range.start = otherRange.end + 1;
+    }
+
+    if (range.end >= otherRange.start && range.end <= otherRange.end) {
+      range.end = otherRange.start - 1;
+    }
+  }
 }
 
-console.log(freshIngredients)
+const freshIDsNb = ranges.map((range) => {
+  if (range.start === -1 || range.end === -1) {
+    return 0;
+  }
+
+  return range.end - range.start + 1
+}).reduce((acc, curr) => acc += curr, 0);
+
+console.log(freshIDsNb)
