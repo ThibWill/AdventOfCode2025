@@ -8,7 +8,8 @@
     "day2": "tsx 2/gift_shop.ts",
     "day3": "tsx 3/joltage.ts",
     "day4": "tsx 4/printing_department.ts",
-    "day5": "tsx 5/cafeteria.ts"
+    "day5": "tsx 5/cafeteria.ts",
+    "day6": "tsx 6/math_homework.ts"
   },
   "author": "Thib Will",
   "license": "ISC",
