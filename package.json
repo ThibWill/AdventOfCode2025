@@ -9,7 +9,8 @@
     "day3": "tsx 3/joltage.ts",
     "day4": "tsx 4/printing_department.ts",
     "day5": "tsx 5/cafeteria.ts",
-    "day6": "tsx 6/math_homework.ts"
+    "day6": "tsx 6/math_homework.ts",
+    "day7": "tsx 7/laboratories.ts"
   },
   "author": "Thib Will",
   "license": "ISC",
